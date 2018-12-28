@@ -1,0 +1,67 @@
+﻿@model IEnumerable<mvc_test_course.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<h1 style="color:red ;align-content:center">
+  Diferent beween Html &&& Ajax beginform in search product
+</h1>
+@using (Html.BeginForm("Search", "product"))
+{<label> Product Name</label>
+    @Html.TextBox("Productname")
+    <input type="submit" value="Search" />
+}
+<hr />
+
+@using (Ajax.BeginForm("SearchPartial", "Product", new AjaxOptions()
+{
+    UpdateTargetId = "UpdateTabel",
+    HttpMethod = "post",
+    InsertionMode = InsertionMode.Replace
+
+})) { 
+
+
+
+    <label> Product Name</label>
+    @Html.TextBox("Productname")
+    <input type="submit" value="SearchUseingAjax" />
+}
+
+<div id="UpdateTabel">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+               
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
